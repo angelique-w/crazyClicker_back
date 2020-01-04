@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../index");
 
-const User = sequelize.define(
-    "User",
+const Team = sequelize.define(
+    "Team",
     {
         uuid: {
             type: Sequelize.UUID,
@@ -10,15 +10,16 @@ const User = sequelize.define(
             primaryKey: true,
             defaultValue: Sequelize.UUIDV4
         },
-        pseudo: {
+        name: {
             type: Sequelize.STRING,
             allowNull: false
         },
-        score: {
-            type: Sequelize.INTEGER
+        logo: {
+            type: Sequelize.STRING,
+            allowNull: true
         }
     },
     {}
 );
 
-module.exports = User;
+module.exports = Team;
