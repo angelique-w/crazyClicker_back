@@ -55,4 +55,20 @@ router.post("/", (req, res) => {
         });
 });
 
+// Increment a user : put a user
+router.put("/:uuid/click", (req, res) => {
+    const uuid = req.params.uuid;
+    User.update(
+        { score: sequelize.literal("score+1") },
+        { where: { uuid: uuid } }
+    )
+        .then(user => res.status(200).end())
+        .catch(err => {
+            res.status(400).json({
+                status: "error",
+                message: "invalid request"
+            });
+        });
+});
+
 module.exports = router;
