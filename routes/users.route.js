@@ -23,12 +23,34 @@ router.get("/", (req, res) => {
 // Get one user
 router.get("/:uuid", (req, res) => {
     const uuid = req.params.uuid;
-    User.findOne({ include: [{ model: Team }] }, { where: { uuid: uuid } })
+    User.findOne({ where: { uuid: uuid }, include: [{ model: Team }] })
         .then(user => res.status(200).json(user))
         .catch(err => {
             res.status(400).json({
                 status: "error",
                 message: "Invalid request"
+            });
+        });
+});
+
+// Post a user
+router.post("/", (req, res) => {
+    const uuid = uuidv4();
+    const pseudo = req.body.pseudo;
+    const score = 0;
+    const team = req.body.team;
+    const user = {
+        uuid,
+        pseudo,
+        score,
+        TeamUuid: team
+    };
+    User.create(user)
+        .then(user => res.status(201).json(user))
+        .catch(err => {
+            res.status(400).json({
+                status: "error",
+                message: "invalid request"
             });
         });
 });
